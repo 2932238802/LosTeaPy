@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routes import router
+from app.db.init_db import init_db
+from app.api.router import router
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
+    init_db()
 
     app = FastAPI(title=settings.app_name)
 

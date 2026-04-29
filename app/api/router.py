@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from app.chat_service import chat_with_llm
+from app.services.chat_service import chat_with_llm
 from app.config import get_settings
-from app.schemas import ChatRequest, ChatResponse, HealthResponse
+from app.schemas.chat import ChatRequest, ChatResponse, HealthResponse
 
 router = APIRouter()
 
@@ -22,3 +22,5 @@ def api_health() -> HealthResponse:
 @router.post("/api/chat", response_model=ChatResponse)
 def chat(req: ChatRequest) -> ChatResponse:
     return chat_with_llm(req)
+
+# @router.post("/api/auth/register",response_class=)

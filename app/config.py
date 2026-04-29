@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     max_history_chars: int = Field(default=2000, alias="CHAT_MAX_HISTORY_CHARS")
     max_message_chars: int = Field(default=4000, alias="CHAT_MAX_MESSAGE_CHARS")
 
+    sqlite_database_url : str = Field(default="sqlite:///./app.db", alias="SQLITE_DATABASE_URL")
+
     allowed_origins: str = Field(
         default="http://localhost:5173,http://localhost:5174,https://2932238802.github.io",
         alias="ALLOWED_ORIGINS",

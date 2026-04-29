@@ -221,3 +221,7 @@ __marimo__/
 .venv/
 __pycache__/
 *.pyc
+
+*.db
+*.sqlite
+*.sqlite3

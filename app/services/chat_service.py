@@ -4,9 +4,9 @@ from openai import AuthenticationError, BadRequestError
 from openai.types.chat import ChatCompletionMessageParam
 
 from app.config import get_settings
-from app.llm_client import get_llm_client
-from app.prompt_loader import load_system_prompt
-from app.schemas import ChatRequest, ChatResponse
+from app.services.llm_client import get_llm_client
+from app.services.prompt_loader import load_system_prompt
+from app.schemas.chat import ChatRequest, ChatResponse
 
 EMPTY_MESSAGE_REPLY = "你可以先告诉我想了解导览、预约、茶叶、文创、溯源、就餐、团购、茶金融、市场调研还是茶碳汇 ~ "
 EMPTY_REPLY_FALLBACK = "抱歉，我暂时没有生成有效回答，你可以换个问法再试试 ~ "
