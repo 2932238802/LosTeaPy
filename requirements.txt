@@ -5,6 +5,6 @@ openai
 pydantic-settings
 pytest
 sqlalchemy
-passlib[bcrypt]
+bcrypt
 python-jose[cryptography]
 email-validator

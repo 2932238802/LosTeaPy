@@ -6,12 +6,33 @@ from app.models.user import User
 from app.schemas.auth import LoginRequest, RegisterRequest, TokenResponse, UserResponse
 from app.services.email_code_service import verify_register_code
 
+ADMIN_USERNAME = "Admin"
+ADMIN_PASSWORD = "666666"
+ADMIN_USER_ID = 0
+
+
+def is_admin_login(email: str, password: str) -> bool:
+    return email == ADMIN_USERNAME and password == ADMIN_PASSWORD
+
 
 def to_user_response(user: User) -> UserResponse:
     return UserResponse(
         id=user.id,
         email=user.email,
         username=user.username or user.email,
+        is_admin=False,
+    )
+
+
+def to_admin_token_response() -> TokenResponse:
+    return TokenResponse(
+        access_token=create_access_token(ADMIN_USER_ID),
+        user=UserResponse(
+            id=ADMIN_USER_ID,
+            email=ADMIN_USERNAME,
+            username="系统管理员",
+            is_admin=True,
+        ),
     )
 
 
@@ -46,6 +67,9 @@ def register_user(req: RegisterRequest, db: Session) -> TokenResponse:
 
 
 def login_user(req: LoginRequest, db: Session) -> TokenResponse:
+    if is_admin_login(req.email, req.password):
+        return to_admin_token_response()
+
     user = db.query(User).filter(User.email == req.email).first()
 
     if not user or not verify_password(req.password, user.password_hash):

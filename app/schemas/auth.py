@@ -1,8 +1,8 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 
 
 class SendCodeRequest(BaseModel):
-    email: EmailStr
+    email: str
 
 
 class MessageResponse(BaseModel):
@@ -10,20 +10,21 @@ class MessageResponse(BaseModel):
 
 
 class RegisterRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str = Field(min_length=6, max_length=128)
     code: str = Field(min_length=4, max_length=10)
 
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str = Field(min_length=1, max_length=128)
 
 
 class UserResponse(BaseModel):
     id: int
-    email: EmailStr
+    email: str
     username: str | None = None
+    is_admin: bool = False
 
 
 class TokenResponse(BaseModel):

@@ -1,19 +1,35 @@
 from datetime import datetime, timedelta, timezone
 
+import bcrypt
 from jose import jwt
-from passlib.context import CryptContext
 
 from app.config import get_settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# bcrypt 对密码长度限制为 72 字节，超出部分会被截断
+BCRYPT_MAX_BYTES = 72
+
+
+def _normalize_password(password: str) -> bytes:
+    data = password.encode("utf-8")
+    if len(data) > BCRYPT_MAX_BYTES:
+        data = data[:BCRYPT_MAX_BYTES]
+    return data
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(_normalize_password(password), salt)
+    return hashed.decode("utf-8")
 
 
 def verify_password(password: str, password_hash: str) -> bool:
-    return pwd_context.verify(password, password_hash)
+    try:
+        return bcrypt.checkpw(
+            _normalize_password(password),
+            password_hash.encode("utf-8"),
+        )
+    except ValueError:
+        return False
 
 
 def create_access_token(user_id: int) -> str:

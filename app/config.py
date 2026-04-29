@@ -73,6 +73,10 @@ class Settings(BaseSettings):
     smtp_port: int = Field(default=465, alias="SMTP_PORT")
     smtp_user: str = Field(default="19857198709@163.com", alias="SMTP_USER")
     smtp_password: str = Field(default="", alias="SMTP_PASSWORD")
+    smtp_use_ssl: bool = Field(default=True, alias="SMTP_USE_SSL")
+    smtp_use_starttls: bool = Field(default=False, alias="SMTP_USE_STARTTLS")
+    smtp_timeout_seconds: int = Field(default=20, alias="SMTP_TIMEOUT_SECONDS")
+    smtp_max_retries: int = Field(default=2, alias="SMTP_MAX_RETRIES")
 
     @property
     def cors_origins(self) -> List[str]:
