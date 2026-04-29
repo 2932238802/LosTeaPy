@@ -1,5 +1,5 @@
 from app.db.session import Base, engine
-from app.models import User
+from app.models import EmailCode, User
 
 
 def init_db() -> None:

@@ -46,6 +46,33 @@ class Settings(BaseSettings):
         populate_by_name=True,
         extra="ignore",
     )
+    
+    jwt_secret_key:str = Field(
+        default="mJ7x9Kp2wQeRt5uY1iOsD6fG4hJ7kL9mN2bV5nM8pQ0wE1rT3yU6iO7aS4dF8g",
+        alias="JWT_SECRET_KEY"
+    )
+    
+    jwt_algorithm :str = Field(
+        default="HS256",
+        alias="JWT_ALGORITHM"
+    )
+    
+    # token 过期 时间
+    access_token_expire_minutes: int = Field(
+        default=60 * 24 * 7,
+        alias="ACCESS_TOKEN_EXPIRE_MINUTES",
+    )
+    
+    # 就是验证码 时效
+    email_code_expire_minutes: int = Field(
+        default=10,
+        alias="EMAIL_CODE_EXPIRE_MINUTES",
+    )
+
+    smtp_host: str = Field(default="smtp.163.com", alias="SMTP_HOST")
+    smtp_port: int = Field(default=465, alias="SMTP_PORT")
+    smtp_user: str = Field(default="19857198709@163.com", alias="SMTP_USER")
+    smtp_password: str = Field(default="", alias="SMTP_PASSWORD")
 
     @property
     def cors_origins(self) -> List[str]:
